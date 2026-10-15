@@ -1,0 +1,55 @@
+# Unreal Engine: generated folders
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+.vs/
+.idea/
+*.sln
+*.VC.db
+*.VC.opendb
+*.suo
+*.sdf
+
+# Build output (only the Android launcher icons are kept)
+Build/*
+!Build/Android/
+Build/Android/*
+!Build/Android/res/
+
+# Packages, symbols, archives
+*.apk
+*.aab
+*.so
+*.pdb
+*.sym
+*.zip
+*.7z
+
+# Saves, logs, local databases
+*.sav
+*.log
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.db
+
+# Server: real configs, logs, uploaded APKs, local dev data
+Server/Fishing-game/config.php
+Server/Fishing-game/logs/*
+!Server/Fishing-game/logs/.htaccess
+Server/Fishing-game/download/*.apk
+Server/local/*
+!Server/local/config.example.php
+
+# Secrets
+.env
+.env.*
+*.keystore
+*.jks
+
+# OS / editors
+Thumbs.db
+Desktop.ini
+.DS_Store

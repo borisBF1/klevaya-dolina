@@ -1,0 +1,29 @@
+# Fishing Valley: the game's APK files (Fishing-game/download/). Works on Apache 2.2 and 2.4.
+# The admin uploads KlevayaDolina.apk here with the hosting file manager (see README.txt).
+Options -Indexes
+DirectoryIndex index.html
+
+# Android installs an .apk only when it arrives with this type.
+<IfModule mod_mime.c>
+	AddType application/vnd.android.package-archive .apk
+</IfModule>
+
+<FilesMatch "\.apk$">
+	ForceType application/vnd.android.package-archive
+	<IfModule mod_headers.c>
+		Header set Content-Disposition "attachment"
+		# the file keeps its name between versions: always ask the server whether it changed
+		Header set Cache-Control "no-cache"
+	</IfModule>
+</FilesMatch>
+
+# Nothing here is a script: never run PHP or other code uploaded into this folder.
+<FilesMatch "\.(php\d?|phtml|phar|cgi|pl|py|sh)$">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>

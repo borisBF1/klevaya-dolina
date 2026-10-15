@@ -1,0 +1,32 @@
+# Fishing Valley: pictures from the game for the download page and the admin panel (Fishing-game/img/).
+# Built by Tools/ExportArt.ps1 (icons/, sprites/, shots/, loc/, gameplay.*, art.json). Works on Apache 2.2 and 2.4.
+Options -Indexes
+
+<IfModule mod_mime.c>
+	AddType image/webp .webp
+	AddType application/json .json
+</IfModule>
+
+# Static files only: long browser cache (a new export changes the file names' contents, art.json is re-read by PHP).
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType image/png "access plus 30 days"
+	ExpiresByType image/webp "access plus 30 days"
+	ExpiresByType image/gif "access plus 30 days"
+</IfModule>
+<IfModule mod_headers.c>
+	<FilesMatch "\.(png|webp|gif)$">
+		Header set Cache-Control "public, max-age=2592000"
+	</FilesMatch>
+</IfModule>
+
+# Nothing here is a script: never run PHP or other code uploaded into this folder.
+<FilesMatch "\.(php\d?|phtml|phar|cgi|pl|py|sh)$">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>

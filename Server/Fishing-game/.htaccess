@@ -1,0 +1,26 @@
+# Fishing Valley server (Fishing-game/): protection rules. Works on Apache 2.2 and 2.4.
+Options -Indexes
+AddDefaultCharset UTF-8
+DirectoryIndex index.php index.html
+
+# Secrets, databases, logs and docs are never served.
+<FilesMatch "(^config\.php$|^config\.sample\.php$|\.(sqlite|sqlite3|db|log|md|txt|sql|bak|ini|sh|dist)$|^\.)">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>
+
+# Include folders (they also have their own .htaccess and PHP guards).
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule ^(lib|logs|data|local|tests)(/|$) - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+	Header set X-Robots-Tag "noindex, nofollow"
+	Header set X-Content-Type-Options "nosniff"
+</IfModule>
